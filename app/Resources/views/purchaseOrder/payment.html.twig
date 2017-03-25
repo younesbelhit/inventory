@@ -1,0 +1,45 @@
+{{ form_start(form, { attr: { 'action': '#', 'role': 'form' } }) }}
+    <div class="row">
+        <div class="col-md-2">
+            <label for="#">Montant Payé</label>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.amount, { attr: { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="#">Date prévue</label>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.paymentDate, { attr: { 'class': 'form-control datepicker' } }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label for="#">Methode de paiment</label>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.paymentMethod, { attr: { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="#">Réf. de réglement</label>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.paymentReference, { attr: { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                {{ form_widget(form.description, { attr: { 'class': 'form-control', 'placeholder': 'Note pour reglement', 'rows': '2' } }) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

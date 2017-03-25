@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ app.user.username }} | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li>Profile</li>
+                <li class="active">{{ app.user.username }}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <button type="submit" form="fos_user_profile_edit" class="btn btn-primary"> Mettre à jour le profil </button>
+            <a href="{{ path('import_product') }}" class="btn btn-default"> Annuler </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" style="margin-top: 10px;">
+                <div class="panel">
+                    <div class="panel-body">
+                        {{ include('@FOSUser/Profile/edit_content.html.twig') }}
+                    </div> <!-- .panel-body -->
+                </div> <!-- .panel -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

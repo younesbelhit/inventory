@@ -1,0 +1,126 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { attr: { 'id': 'fos_user_registration_register' }, 'method': 'post', 'action': path('fos_user_registration_register') }) }}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Options personnelles</h3>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>Identifiant</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.username, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.username) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>Nom</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.firstName, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.firstName) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>Prénom</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.lastName, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.lastName) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Informations de contact</h3>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Adresse de messagerie</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.email, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.email) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Mot de passe</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.plainPassword.first, { attr: { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Confirmer le mot de passe</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.plainPassword.second, { attr: { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Téléphone</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.cellPhone, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.cellPhone) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Rôle</label>
+        </div>
+        <div class="col-md-9">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Site web</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.website, { attr: { 'class': 'form-control' }}) }}
+                <span class="text-danger">{{ form_errors(form.website) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>À propos de vous</h3>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Renseignements biographiques</label>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{ form_widget(form.description, { attr: { 'class': 'form-control', 'rows': '4' }}) }}
+                <span class="text-danger">{{ form_errors(form.description) }}</span>
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

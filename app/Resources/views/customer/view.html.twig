@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ customer.name }} | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('customer', {view: 'list'}) }}">Clients</a></li>
+                <li class="active">{{ customer.name }}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <a href="{{ path('create_customer') }}" title="Créer un nouveau l'article" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="{{ path('edit_customer', { id: customer.id, slug: customer.slug }) }}" title="Modifier l'article" class="btn btn-default"> <i class="fa icon-edit-circled"></i> Modifier </a>
+        </div> <!-- .col-md-5 -->
+        <div class="col-md-5">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Options <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="{{ path('print_customer', { id: customer.id }) }}" target="_blank">Imprimer</a></li>
+                    <li><a href="{{ path('duplicate_customer', { id: customer.id }) }}">Duppliquer</a></li>
+                    <li><a href="{{ path('remove_customer', { id: customer.id }) }}" onclick="return confirm('Vous voulez vraiment supprimer cette article ?');">Supprimer</a></li>
+                </ul>
+            </div>
+        </div> <!-- .col-md-6 -->
+        <div class="col-md-2">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="{{ path('customer', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+                    <i class="fa fa-th"></i>
+                </a>
+                <a href="{{ path('customer', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+                    <i class="fa fa-align-justify"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-2 -->
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+
+            <div class="panel" style="margin-top:10px">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="#" class="thumbnail">
+                                <img src="{% if customer.photo.thumbnailPhotoFileName is not defined or customer.photo.thumbnailPhotoFileName is null %}{{ asset('bundles/framework/img/avatar.jpeg') }}{% else %}{{ asset('bundles/framework/uploads/' ~ customer.photo.thumbnailPhotoFileName) }}{% endif %}"
+                                     id=""
+                                     class="img-responsive"
+                                     alt="{{ customer.name }}">
+                            </a>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h4>{{ customer.name }}</h4>
+                                </div>
+                            </div> <!-- .row -->
+                            <h3>Information</h3>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <p> <label>Code postal : </label> {{ customer.postalCode }}</p>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p> <label>Ville : </label> {{ customer.city }}</p>
+                                        </div>
+                                    </div> <!-- .row -->
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p> <label>Adresse : </label> {{ customer.address }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p> <label>Pays : </label> {{ customer.country }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p> <label>Tél : </label> {{ customer.phone }}</p>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p> <label>Fax : </label> {{ customer.fax }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p> <label>Tél.portable : </label> {{ customer.cellPhone }}</p>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Site web : </label> <a href="{{ customer.website }}" target="_blank"> {{ customer.website }}</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Couriel : </label> <a href="mailto:{{ customer.email }}">{{ customer.email }}</a>
+                                </div>
+                            </div> <!-- .row -->
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="tab-control">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active"><a href="#notes" aria-controls="home" role="tab" data-toggle="tab">Notes Internes</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="notes">
+                                                <p>{{ customer.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- .tab-control -->
+                                </div>
+                            </div> <!-- .row -->
+                        </div>
+                    </div> <!-- .row -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

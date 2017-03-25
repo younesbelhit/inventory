@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %} Articles (kanban) | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Articles</li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <form id="datagrid-search" role="search">
+                <span class="datagrid-filter"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <input type="text" class="form-control input-rounded" id="s" placeholder="Rechercer .." name="s">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ path('create_product') }}" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="{{ path('import_product') }}" class="btn btn-default"> <i class="icon-upload"></i> Importer </a>
+        </div>
+        <div class="col-md-6 hidden-xs">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="{{ path('product', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+                    <i class="fa fa-th"></i>
+                </a>
+                <a href="{{ path('product', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+                    <i class="fa fa-align-justify"></i>
+                </a>
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Prev" id="paginate_left" class="btn btn-default">
+                    <i class="fa fa-angle-left fa-lg"></i>
+                </a>
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Next" id="paginate_right" class="btn btn-default">
+                    <i class="fa fa-angle-right fa-lg"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-6 -->
+    </div>
+{% endblock %}
+{% block main_content %}
+<div class="container-kanban">
+    <div class="container-fluid">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 box">
+                    <div data-url="{{ path('view_product', { id: product.id, slug: product.slug }) }}" class="panel kanban-widget waves" style="height: 100px;">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                    <div href="{{ path('view_product', { id: product.id, slug: product.slug }) }}" class="thumbnail">
+                                        <img data-toggle="magnify"
+                                             src="{% if product.photo.thumbnailPhotoFileName is not defined or product.photo.thumbnailPhotoFileName is null %}{{ asset('bundles/framework/img/image-missing.png') }}{% else %}{{ asset('bundles/framework/uploads/' ~ product.photo.thumbnailPhotoFileName) }}{% endif %}"
+                                             class="img-responsive" alt="{{ product.name }}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 col-md-8">
+                                    <h5 class="text-info">{% if product.name|length > 30 %} {{ product.name|slice(0,30) }} ... {% else %} {{ product.name }} {% endif %}</h5>
+                                    <p class="text-muted"> {{ product.category.name }} </p>
+                                    <span> Prix HT : {{ product.sellingPrice|number_format(2, '.', ' ') }} DH </span>
+                                </div>
+                            </div>
+                        </div> <!-- .panel-body -->
+                    </div> <!-- .panel -->
+                </div>
+            {% endfor %}
+        </div> <!-- .row -->
+    </div>
+</div>    
+{% endblock %}

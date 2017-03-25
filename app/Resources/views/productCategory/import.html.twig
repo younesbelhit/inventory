@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %} Importer des catégories | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('user', {view: 'list'}) }}">Catégories</a></li>
+                <li class="active">Importer</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" form="customer" class="btn btn-primary"> Importer </button>
+            <a href="{{ path('product_category') }}" title="Annuler" class="btn btn-default"> Annuler </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+
+    <div class="panel">
+        <div class="panel-heading">
+            Choisir le <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">.CSV</a> fichier à importer. Si vous avez besoin d'un exemple de fichier importable, vous pouvez utiliser l'outil d'exportation pour en générer un.
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="well">
+                        <form method="post" action="#" role="form">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="">Fichier CSV :</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="file" name="file">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>  <!-- .panel-body -->
+    </div> <!-- .panel -->
+
+{% endblock %}

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <title> :: {% block title %} Inventory {% endblock %} :: </title>
+   {% block stylesheets %}
+   <link href="https://fonts.googleapis.com/css?family=Actor|Dekko|Imprima|Ruda|Kalam|Gafata|Roboto" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/pickadate/lib/themes/default.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/pickadate/lib/themes/default.date.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/datatables/media/css/jquery.dataTables.min.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/bootstrap-select/dist/css/bootstrap-select.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/bootstrap-magnify/css/bootstrap-magnify.min.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/waves/dist/waves.min.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/framework/css/morris.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/framework/css/main.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/framework/fontello/css/fontello.css') }}">
+   {% endblock %}
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+ </head>
+<body class="{{ app.request.attributes.get('_route') }}">
+
+{% block body %}
+
+ <main class="wrapper">
+     <!-- nav -->
+     {% block navbar %}
+     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+         <div class="container-fluid">
+            <!-- navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- navbar-brand -->
+                <a class="navbar-brand" href="#">
+                   Sugar Ruch
+                </a>
+            </div>
+            <div class="navbar-inner">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a href="#" data-rel="tooltip" data-placement="bottom" title="Menu" data-toggle="aside">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                     <li>
+                         <a href="#" data-rel="tooltip" data-placement="bottom" data-target="#mailer" data-toggle="modal" title="Email">
+                            <i class="icon-mail"></i>
+                         </a>
+                     </li>
+                     <li class="dropdown notification">
+                        <a href="#" data-rel="tooltip" data-placement="bottom" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Notify">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-danger notify">4</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-arrow pull-right">
+                             <li>
+                                 <div class="notification-header">
+                                     <div class="header-title">
+                                         Notifications
+                                     </div>
+                                 </div>
+                                 <div class="notification-lowerbody">
+
+                                 </div>
+                                 <div class="notification-footer">
+                                     <a class="pull-left" href="">
+                                         <i class="pe-7s-angle-left-circle f-25"></i>
+                                     </a>
+                                     <a class="pull-right" href="">
+                                         <i class="pe-7s-angle-right-circle f-25"></i>
+                                     </a>
+                                 </div>
+                             </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#" data-rel="tooltip" data-placement="bottom" title="Chat">
+                            <i class="icon-chat-inv"></i>
+                        </a>
+                     </li>
+                     <li class="dropdown">
+                       {% if app.user %}
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-option-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a></li>
+                            <li><a href="{{ path('company') }}">Paramètres</a></li>
+                            <li><a href="{{ path('fos_user_change_password') }}">Modifier mot de passe</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Aide</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" onclick="return confirm('Vous voulez se déconnecter ?');">Déconnexion</a></li>
+                          </ul>
+                      {% endif %}
+                     </li>
+                     <li>
+                        <a href="#" data-id="helpbar" data-rel="tooltip" data-placement="bottom" title="Aide">
+                            <i class="icon-help-circled"></i>
+                        </a>
+                     </li>
+                  </ul>
+
+                  <form method="GET" action="#search" class="navbar-form navbar-left" role="search">
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="search" data-role="tagsinput" placeholder="Rechercher sur l'application ..">
+                           <button class="btn btn-search">
+                             <i class="fa fa-search"></i>
+                           </button>
+                     </div>
+                  </form>
+
+                </div><!-- /.navbar-collapse -->
+
+           </div> <!-- .navbar-inner -->
+
+         </div><!-- /.container-fluid -->
+     </nav>
+     {% endblock %}
+
+     <!-- main -->
+     <div id="main" role="main">
+        <!-- aside left -->
+        {% block sidebar %}
+        <aside class="aside">
+            <div class="aside-inner">
+                <ul>
+                   <li class="aside-nav-heading">
+                      <strong>Tableau de board</strong>
+                   </li>
+                   <li>
+                        <a href="{{ path('dashboard') }}" title="Tableau de board" class="{% if app.request.attributes.get('_route') == 'dashboard' %}active{% endif %}">
+                            <em class="fa fa-tachometer"></em>
+                            <span>Tableau de board</span>
+                        </a>
+                   </li>
+                   <li class="aside-nav-heading">
+                        <strong>Achats</strong>
+                   </li>
+                   <li>
+                       <a href="{{ path('supplier', {view: 'list'}) }}" title="Fournisseurs" class="{% if app.request.attributes.get('_route') == "supplier" or app.request.attributes.get('_route') == "view_supplier" or app.request.attributes.get('_route') == "create_supplier" or app.request.attributes.get('_route') == "edit_supplier"  %}active{% endif %}">
+                            <em class="fa fa-user"></em>
+                            <span>Fournisseurs</span>
+                       </a>
+                   </li>
+                   <li>
+                        <a href="{{ path('purchaseOrder') }}" title="Bons de commandes" class="{% if app.request.attributes.get('_route') == "purchaseOrder" or app.request.attributes.get('_route') == "view_purchaseOrder" or app.request.attributes.get('_route') == "create_purchaseOrder" or app.request.attributes.get('_route') == "edit_purchaseOrder"  %}active{% endif %}">
+                            <em class="fa fa-file-text"></em>
+                            <span>Bons de commandes</span>
+                        </a>
+                   </li>
+                   <li>
+                        <a href="#" title="Bons de receptions">
+                            <em class="fa fa-folder"></em>
+                            <span>Bons de reception</span>
+                        </a>
+                   </li>
+                   <li class="aside-nav-heading">
+                        <strong>Ventes</strong>
+                   </li>
+                   <li>
+                       <a href="{{ path('customer', {view:'list'}) }}" title="Clients" class="{% if  app.request.attributes.get('_route') == "customer" or app.request.attributes.get('_route') == "view_customer" or app.request.attributes.get('_route') == "create_customer" or app.request.attributes.get('_route') == "edit_customer" or app.request.attributes.get('_route') == "import_customer"  %}active{% endif %}">
+                           <em class="fa fa-user"></em>
+                           <span>Clients</span>
+                       </a>
+                   </li>
+                   <li>
+                       <a href="{{ path('salesOrder') }}" title="Bons de commandes" class="{% if app.request.attributes.get('_route') == 'salesOrder' or app.request.attributes.get('_route') == 'create_salesOrder' or app.request.attributes.get('_route') == 'edit_salesOrder' or app.request.attributes.get('_route') == 'view_salesOrder' %}active{% endif %}">
+                           <em class="fa fa-file-text"></em>
+                           <span>Bons de commandes</span>
+                       </a>
+                   </li>
+                    <li>
+                        <a href="#" title="Bons de receptions">
+                            <em class="fa fa-folder"></em>
+                            <span>Bons de livraison</span>
+                        </a>
+                    </li>
+                   <li class="aside-nav-heading">
+                       <strong>Articles</strong>
+                   </li>
+                   <li>
+                       <a href="{{ path('product', {view : 'list'}) }}" title="Articles" class="{% if app.request.attributes.get('_route') == 'product' or app.request.attributes.get('_route') == "view_product" or app.request.attributes.get('_route') == "create_product" or app.request.attributes.get('_route') == "edit_product" or app.request.attributes.get('_route') == "import_product"  %}active{% endif %}">
+                           <em class="fa fa-cubes"></em>
+                           <span>Articles</span>
+                       </a>
+                   </li>
+                   <li>
+                       <a href="{{ path('product_category') }}" title="Catégories des articles" class="{% if app.request.attributes.get('_route') == 'product_category' or app.request.attributes.get('_route') == "create_product_category" or app.request.attributes.get('_route') == "edit_product_category" or app.request.attributes.get('_route') == "import_product_category" %}active{% endif %}">
+                           <em class="fa fa-tags"></em>
+                           <span>Catégories d'articles</span>
+                       </a>
+                   </li>
+                   {% if app.user.hasRole('ROLE_ADMIN') %}
+                   <li class="aside-nav-heading">
+                       <strong>Configuration</strong>
+                   </li>
+                   <li>
+                      <a href="{{ path('user', {view:'list'}) }}" title="Utilisateurs" class="{% if app.request.attributes.get('_route') == 'user' %}active{% endif %}">
+                        <em class="fa fa-users"></em>
+                        <span>Utilisateurs</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ path('company') }}" title="Société" class="{% if app.request.attributes.get('_route') == 'company' or app.request.attributes.get('_route') == 'edit_company' %}active{% endif %}">
+                        <em class="fa fa-cogs"></em>
+                        <span>Sociétés</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" title="Entrepôt">
+                         <em class="fa fa-truck"></em>
+                         <span>Entrepôt</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </aside>
+        {% endblock %}
+
+        <!-- dynamic content -->
+        <div class="content">
+            {% block content_header %}
+            <div class="content-heading">
+                <div class="container-fluid">
+                    {% block content_heading %}
+
+                    {% endblock %}
+                </div> <!-- .container-fluid -->
+            </div> <!-- .content-heading -->
+            {% endblock %}
+
+            <div class="main-content" id="main-content">
+                {% block main_content %}
+
+                {% endblock %}
+            </div> <!-- .main-content -->
+        </div> <!-- .content -->
+
+         <div id="helpbar" class="helpbar collapsed">
+             <div class="helpbar-header">
+                 <div class="helpbar-title">
+                    <h5> Help Title</h5>
+                 </div>
+                 <div class="helpbar-close">
+                     <i class="fa fa-angle-right"></i>
+                 </div>
+                 <div class="helpbar-description">
+                     <p>For basic styling—light padding and only horizontal dividers—add the base class .
+                         table to any. It may seem super redundant</p>
+                 </div>
+             </div> <!-- .helpbar-header -->
+             <div class="helpbar-body">
+                 <br/>
+                 <h4>Help About Something</h4>
+                 <p>For basic styling—light padding and only horizontal dividers—add the base class .table to any. It may seem super redundant,
+                     but given the widespread use of tables for other plugins like calendars and date pickers, we've opted to isolate our custom table styles.</p>
+                 {% for i in 1..10 %}
+                     <hr/>
+                     <h4>Another Help About Something</h4>
+                     <p>For basic styling—light padding and only horizontal dividers—add the base class .table to any. It may seem super redundant,
+                         but given the widespread use of tables for other plugins like calendars and date pickers, we've opted to isolate our custom table styles.</p>
+                {% endfor %}
+             </div>
+         </div>
+
+
+         <div class="modal fade bs-example-modal-lg" id="mailer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal-dialog modal-lg" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                         <h4 class="modal-title" id="myModalLabel">Envoyer un email</h4>
+                     </div>
+                     <div class="modal-body">
+                         <div class="form-group">
+                           <input type="text" placeholder="Destinataire" class="form-control input-lg" name="">
+                         </div>
+                         <div class="form-group">
+                           <input type="text" placeholder="Sujet" class="form-control input-lg" name="">
+                         </div>
+                         <div class="form-group">
+                           <textarea class="form-control tinymce" placeholder="Message"></textarea>
+                         </div>
+                         <div class="form-group">
+                           <input type="file" class="btn btn-sm btn-default" name="file">                           
+                         </div>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-primary">Save changes</button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+     {% block javascripts %}
+     <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/jquery-form-validator/form-validator/jquery.form-validator.min.js') }}"></script>
+     <!--[if lt IE 9]>
+     <script type="text/javascript" src="{{ asset('bower_components/html5shiv/dist/html5shiv.js') }}"></script>
+     <![endif]-->
+     <script type="text/javascript" src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/pickadate/lib/picker.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/pickadate/lib/picker.date.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/bootstrap-select/dist/js/bootstrap-select.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/waves/dist/waves.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bundles/framework/js/raphael-min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/tinymce/tinymce.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bundles/framework/js/morris.min.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+     <script type="text/javascript" src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+     <script type="text/javascript" src="{{ asset('bundles/framework/js/init.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('bundles/framework/js/main.js') }}"></script>
+     {% endblock %}
+
+    </div><!-- .wrapper -->
+ </main>
+{% endblock %}
+ </body>
+</html>

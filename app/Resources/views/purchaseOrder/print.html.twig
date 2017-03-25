@@ -1,0 +1,65 @@
+{% extends 'base.invoice.html.twig' %}
+
+{% block title %} Bons de commande | {{ parent() }} {% endblock %}
+
+{% block invoice_number %}
+    {{ purchaseOrderHeader.purchaseOrderNumber }}
+{% endblock %}
+
+{% block invoice_date %}
+    {{ purchaseOrderHeader.orderDate|date('d/m/Y')}}
+{% endblock %}
+
+
+{% block content %}
+
+    <br/>
+    <div class="heading">
+        <h1 class="text-center">Bons de commandes</h1>
+    </div>
+    <br/>
+    <table class="table table-no-bordred table-condensed">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Qte</th>
+                <th>Prix Ht</th>
+                <th>Taxes</th>
+                <th>Sous Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchaseOrderDetail in purchaseOrderHeader.purchaseOrderDetail %}
+                <tr>
+                    <td title="">{{ purchaseOrderDetail.product.name }}</td>
+                    <td>{{ purchaseOrderDetail.orderQty }}</td>
+                    <td>{{ purchaseOrderDetail.unitPrice|number_format(2, '.', ' ') }}</td>
+                    <td>{{ purchaseOrderDetail.product.tva }}</td>
+                    <td>{{ purchaseOrderDetail.lineTotal|number_format(2, '.', ' ') }} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-5 col-md-offset-7">
+            <table class="table table-no-bordred">
+                <tbody>
+                    <tr>
+                        <td>Montant hors taxe</td>
+                        <td>{{ purchaseOrderHeader.totalHT|number_format(2, '.', ' ') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Taxes</td>
+                        <td>0,000</td>
+                    </tr>
+                    <tr>
+                       <td><h4>Total</h4></td>
+                       <td><h4>{{ purchaseOrderHeader.totalTTC|number_format(2, '.', ' ') }}</h4></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

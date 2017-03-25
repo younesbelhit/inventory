@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+{% block title %} Créer un produit | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('product', {view: 'list'}) }}">Articles</a></li>
+                <li class="active">Nouveau</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" form="product" class="btn btn-primary"> Enregistrer </button>
+            <a href="{{ path('product', {view:'list'}) }}" title="Annuler" class="btn btn-default"> Annuler </a>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="{{ path('product', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+                    <i class="fa fa-th"></i>
+                </a>
+                <a href="{{ path('product', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+                    <i class="fa fa-align-justify"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-6 -->
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+
+            <div class="panel" style="margin-top:10px">
+                <div class="panel-body">
+                    {{ form_start(form, { attr: { 'method': 'POST', 'action': path('create_product'), 'id': 'product' ,'role': 'form', 'enctype':'multipart/form-data' } }) }}
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="#" class="thumbnail">
+                                <img src="{{ asset('bundles/framework/img/image-missing.png') }}" id="preview_image" class="img-responsive" alt="...">
+                                {{ form_widget(form.photo, { attr: { 'class': 'choose-image' } }) }}
+                            </a>
+                        </div>
+
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        {{ form_widget(form.name, { attr: { 'class': 'form-control input-lg', 'placeholder': 'Nom de l\'article' } }) }}
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.category, { attr: { 'class': 'form-control' } }) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <a href="#" title="Categorie"
+                                       style="margin-left: -20px;" class="btn btn-sm btn-default"
+                                       data-placement="right" data-toggle="modal"
+                                       data-rel="tooltip" data-target="#category">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </a>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            {{ form_widget(form.finishedGoodsFlg) }}
+                                            <label for="product_finishedGoodsFlg">Peut être vendu</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+                        </div> <!-- .col-md-10 -->
+                    </div> <!-- .row -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="tab-control">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active"><a href="#informations" aria-controls="informations" role="tab" data-toggle="tab">Informations</a></li>
+                                            <li role="presentation" class=""><a href="#inventaire" aria-controls="inventaire" role="tab" data-toggle="tab">Inventaire</a></li>
+                                            <li role="presentation" class=""><a href="#ventes" aria-controls="ventes" role="tab" data-toggle="tab">Ventes</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="informations">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="">Prix de vente</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.sellingPrice, { attr: { 'class': 'form-control', 'placeholder': 'Prix de vente' } }) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="">Référence interne</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.number, { attr: { 'class': 'form-control', 'placeholder': 'Référence interne' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- .row -->
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="">Etat</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.status, { attr: { 'class': 'form-control' } }) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="">Code barre</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.barCode, { attr: { 'class': 'form-control', 'placeholder': 'Code barre EAN13' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- .row -->
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="">Quantité</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.quantity, { attr: { 'class': 'form-control', 'placeholder': 'Quantité en stock' } }) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="">Taux de tva</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.tva, { attr: { 'class': 'form-control' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- .row -->
+                                                <hr/>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            {{ form_widget(form.description, { attr: { 'class': 'form-control', 'placeholder': 'Décrivez les caractéristiques de l\'article', 'rows': '4' } }) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- .tab-pane -->
+                                            <div role="tabpanel" class="tab-pane" id="inventaire">
+                                            </div>
+                                        </div>
+                                    </div> <!-- .tab-control -->
+                                </div>
+                            </div> <!-- .row -->
+                        </div> <!-- .col-md-12 -->
+                    </div> <!-- .row -->
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal" id="category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:ProductCategory:create')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

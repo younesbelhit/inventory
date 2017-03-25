@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> :: {% block title %} Inventory {% endblock %} :: </title>
+    {% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Paprika|Handlee|Kalam" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('bower_components/bootstrap/dist/css/bootstrap.css')) }}">
+    <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('bundles/framework/css/invoice.css')) }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+
+{% block header %}
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="pull-left">
+                        <h1>Philipie Soleil</h1>
+                        <h4>Société de vente des produits</h4>
+                    </div>
+                </div> <!-- .col-md-6 -->
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <h4>Facture N° {% block invoice_number %} {% endblock %}</h4>
+                        <h4>Date {% block invoice_date %} {% endblock %}</h4>
+                        <h4>N° Client 245/874</h4>
+                    </div>
+                </div> <!-- .col-md-6 -->
+            </div> <!-- .row -->
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="pull-left">
+                        <h4> 78 Bld des Augustins Batiment <br/> "Les éoliennes" - esc B
+                            34 000 Montpellier </h4>
+                        <h4> <label>Tel : </label> 0665 65 16 75 </h4>
+                        <h4> <label>Fax : </label> 0665 65 16 75 </h4>
+                        <h4> <label>Couriel : </label>contact@hotmail.fr </h4>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <div  class="well">
+                            <h3> M.Mlle {% block invoice_client %} {% endblock %}</h3>
+                            <h5>7 Rue Tronchet, 75008 Paris, France 35000</h5>
+                            <h5> <label>Tel : </label> 0665 65 16 75 </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+<main id="main" role="main">
+    {% block content %}
+
+    {% endblock %}
+</main>
+
+{% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse venenatis purus sed aliquet interdum. Vestibulum in dui dolor. Praesent tempus posuere nisi, id faucibus urna lacinia non.</p>
+        </div>
+    </footer>
+{% endblock %}
+
+</body>
+</html>

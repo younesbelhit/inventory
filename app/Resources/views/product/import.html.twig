@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block title %} Importer des article | {{ parent() }} {% endblock %}
+{% block content_heading %}
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li><a href="{{ path('product', {view: 'list'}) }}">Articles</a></li>
+				<li class="active">Importer</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<button type="submit" form="product" class="btn btn-primary"> Importer </button>
+			<a href="{{ path('product', {view: 'list'}) }}" title="Annuler" class="btn btn-default"> Annuler </a>
+		</div>
+		<div class="col-md-6">
+			<div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+				<a href="{{ path('product', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+					<i class="fa fa-th"></i>
+				</a>
+				<a href="{{ path('product', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+					<i class="fa fa-align-justify"></i>
+				</a>
+			</div>
+		</div> <!-- .col-md-6 -->
+	</div>
+{% endblock %}
+{% block main_content %}
+
+	<div class="panel">
+		<div class="panel-heading">
+			Choisir le <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">.CSV</a> fichier à importer. Si vous avez besoin d'un exemple de fichier importable, vous pouvez utiliser l'outil d'exportation pour en générer un.
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="well">
+                        {{ form_start(form) }}
+							<div class="row">
+								<div class="col-md-2">
+									<label for="">Fichier CSV :</label>
+								</div>
+								<div class="col-md-4">
+									{{ form_widget(form.file) }}
+								</div>
+							</div>
+                        {{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div> <!-- .panel-body -->
+	</div> <!-- .panel -->
+
+{% endblock %}

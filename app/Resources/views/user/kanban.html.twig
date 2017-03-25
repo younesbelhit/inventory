@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% block title %} Utilisateurs (kanban) | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Utilisateurs</li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <form id="datagrid-search" role="search">
+                <span class="datagrid-filter"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <input type="text" class="form-control input-rounded" id="s" placeholder="Rechercer .." name="s">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer  </a>
+            <a href="#" class="btn btn-default"> <i class="icon-upload"></i> Importer </a>
+        </div>
+        <div class="col-md-6 hidden-xs">
+            <a href="#" title="Next" class="btn btn-default pull-right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="#" title="Prev" class="btn btn-default pull-right">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a href="{{ path('user', {view:'list'}) }}" title="List" class="btn btn-default pull-right">
+                <i class="fa fa-align-justify"></i>
+            </a>
+            <a href="{{ path('user', {view:'kanban'}) }}" title="Kanban" class="btn btn-default pull-right">
+                <i class="fa fa-th"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+<div class="container-kanban">    
+    <div class="container-fluid">
+        <div class="row">
+            {% for user in users %}
+                <div class="col-md-3 box">
+                    <div class="panel kanban-widget waves" style="height: 100px;">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                    <div class="thumbnail">
+                                        <img data-toggle="magnify"
+                                             src="{{ asset('bundles/framework/img/avatar.jpeg') }}"
+                                             class="img-responsive" alt="{{ user.username }}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 col-md-8">
+                                    <h4> {{ user.username }} </h4>
+                                    <a href="mailto:{{ user.email }}"> {{ user.email }} </a>
+                                    <p class="text-muted">{{ user.lastLogin|date('Y-m-d H:i:s') }}</p>
+                                </div>
+                            </div>
+                        </div> <!-- .panel-body -->
+                    </div> <!-- .panel -->
+                </div>
+            {% endfor %}
+        </div> <!-- .row -->
+    </div>
+</div>    
+{% endblock %}

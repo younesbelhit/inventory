@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style type="text/css">
+body {
+   font-family: 'Handlee', sans-serif;
+}
+.table {
+   border-collapse: collapse !important;
+}
+.table td,
+.table th {
+   background-color: #fff !important;
+}
+.table {
+   width: 100%;
+   max-width: 100%;
+   margin-bottom: 20px;
+}
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd !important;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+   padding: 8px;
+   line-height: 1.42857143;
+   vertical-align: top;
+   border-top: 1px solid #ddd;
+ }
+</style>
+{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <td colspan="2"><h3>{{ customer.name }}</h3></td>
+            </tr>
+            <tr>
+                <td> <label>Code postal : </label> {{ customer.postalCode }}</td> <td> <label>Ville : </label> {{ customer.city }} </td>
+            </tr>
+            <tr>
+                <td> <label>Adresse : </label> {{ customer.address }} </td>
+            </tr>
+            <tr>
+                <td> <label>Pays : </label> {{ customer.country }} </td> <td> <label>Tél : </label> {{ customer.phone }} </td>
+            </tr>
+            <tr>
+                <td> <label>Fax : </label> {{ customer.fax }} </td> <td> <label>Tél.portable : </label> {{ customer.cellPhone }} </td>
+            </tr>
+            <tr>
+                <td> <label>Site web : </label> <a href="{{ customer.website }}" target="_blank"> {{ customer.website }}</a> </td>
+            </tr>
+            <tr>
+                <td> <h3>Notes Internes</h3> </td>
+            </tr>
+            <tr>
+                <td> {{ customer.description }} </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

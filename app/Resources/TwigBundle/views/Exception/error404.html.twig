@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} | Page not found {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/framework/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/framework/css/error.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="error-wrapper">
+        <div class="error-container">
+            <div class="error">
+                <div class="error-title">
+                    Error
+                </div>
+                <div class="error-number">
+                    404
+                </div>
+                <div class="error-description">
+                    Sorry, The page you were looking for doesn't exist
+                </div>
+                <div class="error-or">
+                    <div class="or-line"></div>
+                    <div class="or">Search</div>
+                </div>
+                <div class="error-textbox">
+                    <input type="text" class="form-control" autofocus="">
+                </div>
+                <div class="error-or">
+                    <div class="or-line"></div>
+                    <div class="or">Or</div>
+                </div>
+                <div class="text-center">
+                    <a href="{{ path('dashboard') }}" class="btn btn-lg btn-primary">
+                        <i class="fa fa-arrow-left"></i>
+                        &nbsp; Retour à l'application
+                    </a>
+                </div>
+            </div> <!-- .error -->
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{{ form_start(form, { attr: { 'action': path('product_category_create') }  }) }}
+    <div class="form-group">
+        {{ form_widget(form.name, { attr: { 'class': 'form-control', 'placeholder': 'Nom'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.description, { attr: { 'class': 'form-control', 'placeholder': 'Description'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.submit, { attr: { 'class': 'btn btn-block btn-default'} }) }}
+    </div>
+{{ form_end(form) }}

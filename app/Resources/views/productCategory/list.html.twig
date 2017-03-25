@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+{% block title %} Categories (list) | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Catégories</li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <form id="datagrid-search" role="search">
+                <span class="datagrid-filter"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <input type="text" class="form-control input-rounded" id="s" placeholder="Rechercer .." name="s">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#createModal"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="{{ path('import_product_category') }}" class="btn btn-default"> <i class="icon-upload"></i> Importer </a>
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Options <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="#"> Pdf </a></li>
+                    <li><a href="#"> Json </a></li>
+                    <li><a href="#"> Csv </a></li>
+                    <li><a href="#"> Xml </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 hidden-xs">
+            <a href="#" title="Next" class="btn btn-default pull-right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="#" title="Prev" class="btn btn-default pull-right">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="panel">
+        <div class="panel-body">
+            <table id="datagrid" class="table table-striped table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="checkbox">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for categorie in categories %}
+                    <tr id="{{ categorie.id }}">
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" id="{{ categorie.id }}" class="datagrid_checkbox">
+                                <label for="{{ categorie.id }}"></label>
+                            </div>
+                        </td>
+                        <td> {{ categorie.name }} </td>
+                        <td> {% if categorie.description|length > 100 %} {{ categorie.description|slice(0,100) }} ... {% else %} {{ categorie.description }} {% endif %} </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-options dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-option-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a data-href="{{ path('product_category_edit', { id: categorie.id }) }}" class="btnEditCategory" data-toggle="modal" data-target="#editModal">Modifier</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ path('product_category_remove', { id: categorie.id }) }}" onclick="return confirm('vous voulez supprimer ?');">Supprimer</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div> <!-- .panel-body -->
+    </div> <!-- .panel -->
+
+
+    <!-- Modal Edit -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:ProductCategory:create')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

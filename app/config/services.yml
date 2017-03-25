@@ -1,0 +1,49 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+    product.manager.class: AppBundle\Services\ProductManager
+    customer.manager.class: AppBundle\Services\CustomerManager
+    vendor.manager.class: AppBundle\Services\VendorManager
+    service.manager.class: AppBundle\Services\ServiceManager
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    service.manager:
+            class: "%service.manager.class%"
+            arguments: ['@doctrine.orm.entity_manager', '@service_container', '@router' ,'@request_stack']
+
+    product.manager:
+        class: "%product.manager.class%"
+        arguments: ["@doctrine.orm.entity_manager", "@request_stack"]
+
+    customer.manager:
+            class: "%customer.manager.class%"
+            arguments: ["@doctrine.orm.entity_manager", "@form.factory", "@service_container", "@request_stack"]
+
+    vendor.manager:
+            class: "%vendor.manager.class%"
+            arguments: ["@doctrine.orm.entity_manager", "@request_stack"]
+
+    app.form.registration:
+        class: AppBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+    app.form.profile:
+            class: AppBundle\Form\Type\ProfileType
+            tags:
+                - { name: form.type, alias: app_user_profile }
+
+    company.manager:
+         class: AppBundle\Services\CompanyManager
+         arguments: ['@doctrine.orm.entity_manager', '@service_container', '@request_stack']
+
+    app.install.listener:
+        class: AppBundle\Listener\InstallManager
+        arguments: ['@router', '@event_dispatcher', '@service_container', '@request_stack']
+        tags:
+           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+

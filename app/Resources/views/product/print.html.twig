@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+ <style type="text/css">
+  body {
+      font-family: 'Handlee', sans-serif;
+  }
+ .table {
+    border-collapse: collapse !important;
+ }
+ .table td,
+ .table th {
+    background-color: #fff !important;
+ }
+ .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+ }
+ .table-bordered th,
+ .table-bordered td {
+   border: 1px solid #ddd !important;
+ }
+ .table > thead > tr > th,
+ .table > tbody > tr > th,
+ .table > tfoot > tr > th,
+ .table > thead > tr > td,
+ .table > tbody > tr > td,
+ .table > tfoot > tr > td {
+   padding: 8px;
+   line-height: 1.42857143;
+   vertical-align: top;
+   border-top: 1px solid #ddd;
+ }
+ </style>
+{% endblock %}
+
+{% block body %}
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="#" class="thumbnail">
+                        <img data-toggle="magnify"
+                             src="{% if product.photo.thumbnailPhotoFileName is not defined or product.photo.thumbnailPhotoFileName is null %}{{ asset('bundles/framework/img/image-missing.png') }}{% else %}{{ asset('bundles/framework/uploads/' ~ product.photo.thumbnailPhotoFileName) }}{% endif %}"
+                             class="img-responsive"
+                             alt="{{ product.name }}">
+                    </a>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2>{{ product.name }}</h2>
+                        </div>
+                    </div> <!-- .row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>{{ product.category.name }}</h3>
+                            <br/>
+                        </div>
+                    </div> <!-- .row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="product_finishedGoodsFlg" {%  if product.finishedGoodsFlg == 1 %} checked="checked" {% endif %} disabled>
+                                    <label for="product_finishedGoodsFlg">Peut être vendu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- .row -->
+                    <h3>Information</h3>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p> <label>Prix de vente :</label> <span>{{ product.sellingPrice|number_format(2, '.', ',') }} DH </span> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Référence interne :</label> <span>{{ product.number }} </span>
+                        </div>
+                    </div> <!-- .row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p> <label>Prix d'achat :</label> <span>{{ product.buyingPrice|number_format(2, '.', ',') }} DH </span> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <label>Code barre :</label> <span>{{ product.barCode }}</span> </p>
+                        </div>
+                    </div> <!-- .row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p> <label>Quantité :</label> <span>{{ product.amount }}</span> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <label>Taux de tva :</label> <span>{{ product.tva }} %</span> </p>
+                        </div>
+                    </div> <!-- .row -->
+                    <h3>Description</h3>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p> {{ product.description }} </p>
+                        </div>
+                    </div> <!-- .row -->
+                </div>
+            </div> <!-- .row -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

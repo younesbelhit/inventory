@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+{% block title %} Setting | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Sociétés</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" form="fos_user_registration_register" class="btn btn-primary"> <i class="icon-ok-circle"></i> Enregistrer </button>
+            <a href="{{ path('import_user') }}" class="btn btn-default">  Annuler  </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+            <div class="panel" style="margin-top:10px">
+                <div class="panel-body">
+
+                    {{ form_start(form, { attr: { 'method': 'POST', 'action': path('company'), 'id': 'fos_user_registration_register' ,'role': 'form' } }) }}
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="{{ asset('bundles/framework/img/image-missing.png') }}" id="preview_image" class="img-responsive" alt="...">
+                                    {{ form_widget(form.logo, { attr: { 'class': 'choose-image' } }) }}
+                                </a>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Nom de la société</label>
+                                            {{ form_widget(form.name, { attr: { 'class': 'form-control input-lg', 'placeholder': 'Nom de la société' } }) }}
+                                        </div>
+                                    </div>
+                                </div> <!-- .row -->
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            {{ form_widget(form.slogan, { attr: { 'class': 'form-control', 'placeholder': 'Slogan de la société' } }) }}
+                                        </div>
+                                    </div>
+                                </div> <!-- .row -->
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tab-control">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#informations" aria-controls="home" role="tab" data-toggle="tab">Informations générales</a></li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="informations">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="">Address</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.address, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">Tél</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.phone, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="">CP/Ville</label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.postalCode, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.city, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">Fax</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.fax, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="">Pays</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.country, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">Couriel</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.email, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="">Site web</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.website, { attr: { 'class': 'form-control' } }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="">Devise</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    {{ form_widget(form.currency, { attr: { 'class': 'form-control' } }) }}
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.description, { attr: { 'class': 'form-control', 'rows': '4', 'placeholder': 'Une petite note' } }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- .tabpanel -->
+                                    </div> <!-- .tab-content -->
+                                </div> <!-- .tab-control -->
+                            </div>
+                        </div> <!-- .row -->
+
+                    {{ form_end(form) }}
+
+                </div> <!-- .panel -->
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Tableau de board | {{ parent() }}
+{% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="active">Tableau de board</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript" src="{{ asset('bundles/framework/js/dashboard.js') }}"></script>
+{% endblock %}

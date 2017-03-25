@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+{% block title %} Bons de commandes ( {{ purchaseOrderHeader.purchaseOrderNumber }} ) | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('purchaseOrder') }}">Bons de commandes</a></li>
+                <li class="active">{{ purchaseOrderHeader.purchaseOrderNumber }} </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ path('create_purchaseOrder') }}" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="{{ path('edit_purchaseOrder', { id : purchaseOrderHeader.id }) }}" class="btn btn-default"> <i class="icon-edit-circled"></i> Modifier </a>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-5">
+            <!--<a href="#" class="btn btn-default"> Envoyer par couriel </a>-->
+            <a href="{{ path('print_purchaseOrder', { id : purchaseOrderHeader.id }) }}" class="btn btn-default"> <i class="icon-print-1"></i> Imprimer </a>
+            <a href="#" class="btn btn-primary"> <i class="icon-ok-circle"></i> Confirmer l'achat </a>
+            <a href="{{ path('invoice_purchaseOrder', { id: purchaseOrderHeader.id }) }}" class="btn btn-primary"> <i class="icon-doc-text-inv"></i> Créer la facture </a>
+        </div>
+        <div class="col-md-7">
+            <ul class="list-unstyled form_status">
+                <li class="active" data-id="draft">
+                    <span>Bon de commande brouillon</span>
+                </li>
+                <li class="" data-id="approved">
+                    <span>Bon de commande</span>
+                </li>
+                <li class="" data-id="done">
+                    <span>Terminé</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" style="margin-top: 10px;">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4>Devis / <span class="text-info">{{ purchaseOrderHeader.purchaseOrderNumber }}</span> </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="vendor">Fournisseur</label>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{ purchaseOrderHeader.supplier.name }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="date">Date de commande</label>
+                            </div>
+                            <div class="col-md-4">
+                               <p>{{ purchaseOrderHeader.orderDate|date("d/m/Y") }}</p>
+                            </div>
+                        </div> <!-- .row -->
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="#">Réf fournisseur</label>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{ purchaseOrderHeader.vendorNumber }}</p>
+                            </div>
+                        </div> <!-- .row -->
+                        <br/>
+                        <div class="tab-control">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#purchaseOrderDetail" aria-controls="home" role="tab" data-toggle="tab">Lignes de la commande</a></li>
+                                <li role="presentation"><a href="#invoice" aria-controls="invoice" role="tab" data-toggle="tab">Factures et bons de réception</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="purchaseOrderDetail">
+                                    <table class="table table-condensed table-striped table-hover table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th>Article</th>
+                                            <th>Quantité</th>
+                                            <th>Prix unitaire</th>
+                                            <th>Taxes</th>
+                                            <th>Sous-Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for purchaseOrderDetail in purchaseOrderHeader.purchaseOrderDetail %}
+                                            <tr>
+                                                <td title="">{% if purchaseOrderDetail.product.name|length < 50 %} {{ purchaseOrderDetail.product.name }} {% else %} {{ purchaseOrderDetail.product.name|slice(0,50) }}... {% endif %}</td>
+                                                <td>{{ purchaseOrderDetail.orderQty }}</td>
+                                                <td>{{ purchaseOrderDetail.unitPrice|number_format(2, '.', ' ') }}</td>
+                                                <td>{{ purchaseOrderDetail.product.tva }}</td>
+                                                <td>{{ purchaseOrderDetail.lineTotal|number_format(2, '.', ' ') }} </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-md-4 col-md-offset-8">
+                                            <table class="table table-no-bordred table-responsive">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Montant hors taxe</td>
+                                                    <td><span class="pull-right">{{ purchaseOrderHeader.totalHT|number_format(2, '.', ' ') }} DH</span> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Taxes</td>
+                                                    <td><span class="pull-right">0,00</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h4>Total</h4></td>
+                                                    <td><h4 class="pull-right">{{ purchaseOrderHeader.totalTTC|number_format(2, '.', ' ')  }} DH</h4></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> <!-- tab-pane -->
+                                <div role="tabpanel" class="tab-pane" id="invoice">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="#">Date prévue</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                {{ purchaseOrderHeader.shipDate|date("F jS \\a\\t g:ia") }}
+                                            </div>
+                                        </div>
+                                    </div> <!-- .row -->
+                                </div>
+                            </div>
+                        </div> <!-- .tab-control -->
+                    </div> <!-- .panel-body -->
+                </div> <!-- .panel -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

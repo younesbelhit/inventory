@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+{% block title %} Bons de commandes | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Bons de commandes</li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <form id="datagrid-search" role="search">
+                <span class="datagrid-filter"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <input type="text" class="form-control input-rounded" id="s" placeholder="Rechercer .." name="s">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{{ path('create_purchaseOrder') }}" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="#" class="btn btn-default"> <i class="icon-upload"></i> Importer </a>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group datatable-toolbar hide-toolbar" role="group" aria-label="toolbar options">
+                <a href="#" class="btn btn-default" id="datatable-duplicate" data-rel="tooltip" data-placement="top" title="Dupliquer">
+                    <i class="icon-docs"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-edit" data-rel="tooltip" data-placement="top" title="Modifier">
+                    <i class="icon-edit-circled"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-export" data-rel="tooltip" data-placement="top" title="Exporter en csv">
+                    <i class="icon-export"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-print" data-rel="tooltip" data-placement="top" title="Imprimer">
+                    <i class="fa fa-print"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-trash" data-rel="tooltip" data-placement="top" title="Supprimer">
+                    <i class="icon-trash"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-6 -->
+        <div class="col-md-3 hidden-xs">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Prev" id="paginate_left" class="btn btn-default">
+                    <i class="fa fa-angle-left fa-lg"></i>
+                </a>
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Next" id="paginate_right" class="btn btn-default">
+                    <i class="fa fa-angle-right fa-lg"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-3 -->
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="panel">
+        <div class="panel-body">
+            <table id="datagrid" class="table table-striped table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="checkbox">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>N°Commande</th>
+                        <th>Date de commande</th>
+                        <th>Fournisseur</th>
+                        <th>Total HT</th>
+                        <th>Total TTC</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchaseOrder in purchaseOrder %}
+                        <tr data-url="{{ path('view_purchaseOrder', {id: purchaseOrder.id }) }}">
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" id="{{ purchaseOrder.id }}">
+                                    <label for="{{ purchaseOrder.id }}"></label>
+                                </div>
+                            </td>
+                            <td> {{ purchaseOrder.purchaseOrderNumber }} </td>
+                            <td> {{ purchaseOrder.orderDate|date('d/m/Y') }} </td>
+                            <td> {{ purchaseOrder.vendor.name }} </td>
+                            <td> {{ purchaseOrder.totalHT|number_format(2, '.', ' ') }} </td>
+                            <td> {{ purchaseOrder.totalTTC|number_format(2, '.', ' ') }} </td>
+                            <td>
+                                <label class="label label-info">
+                                    {% if purchaseOrder.status == 0 %}
+                                        Bon de commande brouillon
+                                    {% elseif purchaseOrder.status == 1 %}
+                                        Bon de commande
+                                    {% elseif purchaseOrder.status == 2 %}
+                                        Terminé
+                                    {% endif %}
+                                </label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>N°Commande</th>
+                        <th>Date de commande</th>
+                        <th>Fournisseur</th>
+                        <th>Total HT</th>
+                        <th>Total TTC</th>
+                        <th>État</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div> <!-- .panel-body -->
+    </div> <!-- .panel -->
+{% endblock %}

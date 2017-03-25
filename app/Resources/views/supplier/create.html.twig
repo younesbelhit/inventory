@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %} Créer un Fournisseur | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('supplier', {view: 'list'}) }}">Fournisseurs</a></li>
+                <li class="active">Nouveau</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" form="supplier" class="btn btn-primary"> Enregistrer </button>
+            <a href="{{ path('supplier', {view: 'list'}) }}" title="Annuler" class="btn btn-default"> Annuler </a>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="{{ path('supplier', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+                    <i class="fa fa-th"></i>
+                </a>
+                <a href="{{ path('supplier', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+                    <i class="fa fa-align-justify"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-6 -->
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+
+            <div class="panel" style="margin-top:10px">
+                <div class="panel-body">
+                    {% include 'supplier/create_content.html.twig' %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

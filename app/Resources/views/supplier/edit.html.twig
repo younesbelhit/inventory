@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ supplier.name }} | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('supplier', {view: 'list'}) }}">Fournisseurs</a></li>
+                <li class="active">{{ supplier.name }}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" form="supplier" class="btn btn-primary"> Enregistrer </button>
+            <a href="{{ path('supplier', {view: 'list'}) }}" title="Annuler" class="btn btn-default"> Annuler </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ path('supplier', {view: 'list'}) }}" title="List" class="btn btn-default pull-right">
+                <i class="fa fa-align-justify"></i>
+            </a>
+            <a href="{{ path('supplier', {view: 'kanban'}) }}" title="Kanban" class="btn btn-default pull-right">
+                <i class="fa fa-th"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+
+            <div class="panel" style="margin-top:10px">
+                <div class="panel-body">
+                    {{ form_start(form, { attr: { 'method': 'POST', 'action': path('edit_supplier', { id: supplier.id }), 'id': 'Supplier' ,'role': 'form' } }) }}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="#" class="thumbnail">
+                                <img  src="{% if supplier.photo.thumbnailPhotoFileName is not defined or supplier.photo.thumbnailPhotoFileName is null %}{{ asset('bundles/framework/img/avatar.jpeg') }}{% else %}{{ asset('bundles/framework/uploads/' ~ supplier.photo.thumbnailPhotoFileName) }}{% endif %}"
+                                      id="preview_image"
+                                      class="img-responsive"
+                                      alt="{{ supplier.name }}">
+                                {{ form_widget(form.photo, { attr: { 'class': 'choose-image' } }) }}
+                            </a>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label for="">Nom complet</label>
+                                        {{ form_widget(form.name, { attr: { 'class': 'form-control input-lg', 'placeholder': 'Nom complet' } }) }}
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+
+                            </div> <!-- .row -->
+                            <h3>Information</h3>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                {{ form_widget(form.postalCode, { attr: { 'class': 'form-control', 'placeholder': 'Code postal' } }) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                {{ form_widget(form.city, { attr: { 'class': 'form-control', 'placeholder': 'Ville' } }) }}
+                                            </div>
+                                        </div>
+                                    </div> <!-- .row -->
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.address, { attr: { 'class': 'form-control', 'placeholder': 'Adresse' } }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.country, { attr: { 'class': 'form-control', 'placeholder': 'Pays' } }) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.phone, { attr: { 'class': 'form-control', 'placeholder': 'Tél' } }) }}
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.fax, { attr: { 'class': 'form-control', 'placeholder': 'Fax' } }) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.cellPhone, { attr: { 'class': 'form-control', 'placeholder': 'Tél.portable' } }) }}
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.website, { attr: { 'class': 'form-control', 'placeholder': 'ex :  www.openerp.com' } }) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.email, { attr: { 'class': 'form-control', 'placeholder': 'Courriel' } }) }}
+                                    </div>
+                                </div>
+                            </div> <!-- .row -->
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="tab-control">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active"><a href="#notes" aria-controls="home" role="tab" data-toggle="tab">Notes Internes</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="notes">
+                                                <div class="form-group">
+                                                    {{ form_widget(form.description, { attr: { 'class': 'form-control', 'placeholder': 'Mettre une note interne...', 'rows': '4' } }) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- .tab-control -->
+                                </div>
+                            </div> <!-- .row -->
+                        </div>
+                    </div> <!-- .row -->
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

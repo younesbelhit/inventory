@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+{% block title %} Clients (list) | {{ parent() }} {% endblock %}
+{% block content_heading %}
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li class="active">Clients</li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <form id="datagrid-search" role="search">
+                <span class="datagrid-filter"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <input type="text" class="form-control input-rounded" id="s" placeholder="Rechercer .." name="s">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{{ path('create_customer') }}" class="btn btn-primary"> <i class="icon-plus-circle"></i> Créer </a>
+            <a href="{{ path('import_customer') }}" class="btn btn-default"> <i class="icon-upload"></i> Importer </a>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group datatable-toolbar hide-toolbar" role="group" aria-label="toolbar options">
+                <a href="#" class="btn btn-default" id="datatable-duplicate" data-rel="tooltip" data-placement="top" title="Dupliquer">
+                    <i class="icon-docs"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-edit" data-rel="tooltip" data-placement="top" title="Modifier">
+                    <i class="icon-edit-circled"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-export" data-rel="tooltip" data-placement="top" title="Exporter en csv">
+                    <i class="icon-export"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-print" data-rel="tooltip" data-placement="top" title="Imprimer">
+                    <i class="fa fa-print"></i>
+                </a>
+                <a href="#" class="btn btn-default" id="datatable-trash" data-rel="tooltip" data-placement="top" title="Supprimer">
+                    <i class="icon-trash"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 hidden-xs">
+            <div class="btn-group pull-right" role="group" aria-label="toolbar view type">
+                <a href="{{ path('customer', {view:'kanban'}) }}" data-rel="tooltip" data-placement="bottom" title="Kanban" class="btn btn-default">
+                    <i class="fa fa-th"></i>
+                </a>
+                <a href="{{ path('customer', {view:'list'}) }}" data-rel="tooltip" data-placement="bottom" title="List" class="btn btn-default">
+                    <i class="fa fa-align-justify"></i>
+                </a>
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Prev" id="paginate_left" class="btn btn-default">
+                    <i class="fa fa-angle-left fa-lg"></i>
+                </a>
+                <a href="#" data-rel="tooltip" data-placement="bottom" title="Next" id="paginate_right" class="btn btn-default">
+                    <i class="fa fa-angle-right fa-lg"></i>
+                </a>
+            </div>
+        </div> <!-- .col-md-3 -->
+    </div> <!-- .row -->
+{% endblock %}
+{% block main_content %}
+    <div class="panel">
+        <div class="panel-body">
+            <table id="datagrid" class="table table-striped table-condensed table-responsive table-hover datagrid">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="checkbox">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Couriel</th>
+                        <th>Téléphone</th>
+                        <th>Fax</th>
+                        <th>Site web</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for customer in customers %}
+                    <tr id="{{ customer.id }}" data-url="{{ path('view_customer', { id: customer.id, slug: customer.slug }) }}">
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" id="{{ customer.id }}" class="datagrid_checkbox">
+                                <label for="{{ customer.id }}"></label>
+                            </div>
+                        </td>
+                        <td> {{ customer.name }} </td>
+                        <td> {{ customer.address }} </td>
+                        <td> <a href="mailto:{{ customer.email }}">{{ customer.email }}</a> </td>
+                        <td> {{ customer.phone }} </td>
+                        <td> {{ customer.fax }} </td>
+                        <td> <a href="mailto:{{ customer.website }}" target="_blank">{{ customer.website }}</a> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <div class="checkbox">
+                                <input type="checkbox" id="checked_all">
+                                <label for="checked_all"></label>
+                            </div>
+                        </th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Couriel</th>
+                        <th>Téléphone</th>
+                        <th>Fax</th>
+                        <th>Site web</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div> <!-- .panel-body -->
+    </div> <!-- .panel -->
+{% endblock %}

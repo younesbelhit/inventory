@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        body {
+            font-family: 'Handlee', sans-serif;
+        }
+        .table {
+            border-collapse: collapse !important;
+        }
+        .table td,
+        .table th {
+            background-color: #fff !important;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #ddd !important;
+        }
+        .table > thead > tr > th,
+        .table > tbody > tr > th,
+        .table > tfoot > tr > th,
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Couriel</th>
+                        <th>Tél</th>
+                        <th>Fax</th>
+                        <th>Site web</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for supplier in suppliers %}
+                        <tr>
+                            <td> {{ supplier.name }} </td>
+                            <td> {{ supplier.address }} </td>
+                            <td> {{ supplier.email }} </td>
+                            <td> {{ supplier.phone }} </td>
+                            <td> {{ supplier.fax }} </td>
+                            <td> {{ supplier.website }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
